@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ρυθμίσεις ZTE Blade</string>
+    <string name="prox_calibration_title_head">Βαθμονόμηση αισθητήρα απόστασης</string>
+    <string name="prox_calibration_summary_head">Μην τοποθετείτε τίποτα κοντά στο επάνω μέρος της οθόνης κατά την εκτέλεση</string>
+    <string name="prox_display_title_head">Εμφάνιση δεδομένων του αισθητήρα απόστασης</string>
+    <string name="prox_display_summary_head">Εμφάνιζει τα τρέχοντα δεδομένα βαθμονόμησης του αισθητήρα απόστασης</string>
+    <string name="toast_error">Σφάλμα:</string>
+    <string name="back_button">Πίσω</string>
+    <string name="prox_restore_title_head">Επαναφορά προεπιλογών απόστασης</string>
+    <string name="prox_restore_summary_head">Αφαιρεί τα δεδομένα βαθμονόμησης (απαιτεί επανεκκίνηση)</string>
+    <string name="delete_success">Η επαναφορά προεπιλογών ήταν επιτυχής. Παρακαλώ κάντε επανεκκίνηση.</string>
+    <string name="delete_error">Η επαναφορά προεπιλογών δεν ήταν επιτυχής.</string>
+    <string name="delete_no_file">Χρησιμοποιείτε ήδη τις προεπιλογές.</string>
+
+    <string name="usb_charging_title_head">Φόρτιση μέσω USB</string>
+    <string name="usb_charging_summary_head">Ενεργοποίηση/Απενεργοποίηση</string>
+</resources>

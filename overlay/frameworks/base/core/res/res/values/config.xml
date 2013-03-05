@@ -24,7 +24,17 @@
          config_hardware_automatic_brightness_available is not set, so we will use software implementation -->
     <bool name="config_automatic_brightness_available">true</bool>
 
+    <!-- The 2d accelerator can't do an alpha transformation of
+         a surface with an alpha channel, so enable this special mode
+         to avoid going into software rendering. -->
+    <bool name="config_sf_limitedAlpha">true</bool>
+
     <bool name="config_animateScreenLights">false</bool>
+
+    <!-- Flag indicating whether the surface flinger is inefficient
+         at performing a blur.  Used by parts of the UI to turn off
+         the blur effect where it isn't worth the performance hit. -->
+    <bool name="config_sf_slowBlur">true</bool>
 
     <bool name="config_disableMenuKeyInLockScreen">true</bool>
 

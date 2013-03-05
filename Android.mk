@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),blade)
-    include $(call all-named-subdir-makefiles, recovery libaudio libril libcamera libgralloc libcopybit libsensors BladeParts liblights)
+LOCAL_PATH := $(call my-dir)
+
+ifeq ($(TARGET_DEVICE),blade)
+    include $(call all-makefiles-under,$(LOCAL_PATH))
 endif

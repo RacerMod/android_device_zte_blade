@@ -1,4 +1,4 @@
-# Copyright (C) 2009 The Android Open Source Project
+# Copyright (C) 2011-2013 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#
-# This file is the build configuration for a full Android
-# build for sapphire hardware. This cleanly combines a set of
-# device-specific aspects (drivers) with a device-agnostic
-# product configuration (apps).
-#
-
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
@@ -30,7 +23,8 @@ DEVICE_PACKAGE_OVERLAYS := device/zte/blade/overlay
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := zte_blade
 PRODUCT_DEVICE := blade
-PRODUCT_MODEL := ZTE Blade
+PRODUCT_MODEL := Blade
+PRODUCT_MANUFACTURER := ZTE
 
 PRODUCT_PACKAGES += \
     LiveWallpapers \
@@ -61,30 +55,32 @@ $(call inherit-product-if-exists, vendor/zte/blade/blade-vendor.mk)
 
 DISABLE_DEXPREOPT := false
 
+# Keypad
 PRODUCT_COPY_FILES += \
-    device/zte/blade/qwerty.kl:system/usr/keylayout/qwerty.kl
+    device/zte/blade/prebuilt/usr/keylayout/blade_keypad.kl:system/usr/keylayout/blade_keypad.kl
 
 # fstab
 PRODUCT_COPY_FILES += \
-    device/zte/blade/vold.fstab:system/etc/vold.fstab
+    device/zte/blade/prebuilt/etc/vold.fstab:system/etc/vold.fstab
 
 # Init
 PRODUCT_COPY_FILES += \
-    device/zte/blade/init.blade.rc:root/init.blade.rc \
-    device/zte/blade/ueventd.blade.rc:root/ueventd.blade.rc
+    device/zte/blade/prebuilt/init.blade.rc:root/init.blade.rc \
+    device/zte/blade/prebuilt/ueventd.blade.rc:root/ueventd.blade.rc
 
-# Audio
+# Audio + Media profiles
 PRODUCT_COPY_FILES += \
-    device/zte/blade/AudioFilter.csv:system/etc/AudioFilter.csv \
-    device/zte/blade/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
+    device/zte/blade/prebuilt/etc/AudioFilter.csv:system/etc/AudioFilter.csv \
+    device/zte/blade/prebuilt/etc/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    device/zte/blade/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
 
 # WLAN + BT
 PRODUCT_COPY_FILES += \
-    device/zte/blade/init.bt.sh:system/etc/init.bt.sh \
-    device/zte/blade/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    device/zte/blade/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf \
-    device/zte/blade/prebuilt/hostapd:system/bin/hostapd \
-    device/zte/blade/prebuilt/hostapd.conf:system/etc/wifi/hostapd.conf
+    device/zte/blade/prebuilt/etc/init.bt.sh:system/etc/init.bt.sh \
+    device/zte/blade/prebuilt/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh \
+    device/zte/blade/prebuilt/etc/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    device/zte/blade/prebuilt/etc/wifi/hostapd.conf:system/etc/wifi/hostapd.conf \
+    device/zte/blade/prebuilt/etc/dhcpd/dhcpcd.conf:system/etc/dhcpcd/dhcpcd.conf
 
 # Install the features available on this device.
 PRODUCT_COPY_FILES += \
@@ -95,76 +91,24 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/base/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/base/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
-    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml
+    frameworks/base/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
+    frameworks/base/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
+    frameworks/base/data/etc/android.hardware.touchscreen.multitouch.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
+    packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:/system/etc/permissions/android.software.live_wallpaper.xml
 
-#Kernel Modules
+# WiFi firmware
 PRODUCT_COPY_FILES += \
-    device/zte/blade/prebuilt/ar6000.ko:system/wifi/ar6000.ko \
-    device/zte/blade/prebuilt/cifs.ko:system/lib/modules/2.6.35.7-perf+/cifs.ko \
-    device/zte/blade/prebuilt/zram.ko:system/lib/modules/2.6.35.7-perf+/zram.ko \
-    device/zte/blade/prebuilt/lzo_compress.ko:system/lib/modules/2.6.35.7-perf+/lzo_compress.ko \
-    device/zte/blade/prebuilt/lzo_decompress.ko:system/lib/modules/2.6.35.7-perf+/lzo_decompress.ko
-
-#WiFi firmware
-PRODUCT_COPY_FILES += \
-    device/zte/blade/firmware/regcode:system/wifi/regcode \
-    device/zte/blade/firmware/data.patch.hw2_0.bin:system/wifi/data.patch.hw2_0.bin \
-    device/zte/blade/firmware/athwlan.bin.z77:system/wifi/athwlan.bin.z77 \
-    device/zte/blade/firmware/athtcmd_ram.bin:system/wifi/athtcmd_ram.bin \
-    device/zte/blade/firmware/device.bin:system/wifi/device.bin \
-    device/zte/blade/firmware/eeprom.bin:system/wifi/eeprom.bin \
-    device/zte/blade/firmware/eeprom.data:system/wifi/eeprom.data
-
-#Media profile
-PRODUCT_COPY_FILES += \
-    device/zte/blade/media_profiles.xml:system/etc/media_profiles.xml
-
-PRODUCT_PROPERTY_OVERRIDES := \
-    keyguard.no_require_sim=true \
-    ro.com.android.dateformat=dd-MM-yyyy \
-    ro.ril.hsxpa=1 \
-    ro.ril.gprsclass=10 \
-    ro.media.dec.jpeg.memcap=10000000
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    rild.libpath=/system/lib/libril-qc-1.so \
-    rild.libargs=-d /dev/smd0 \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=15 \
-    ro.com.android.dataroaming=false
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=240 \
-    ro.sf.hwrotation=180
+    device/zte/blade/prebuilt/wifi/ar6000.ko:system/wifi/ar6000.ko \
+    device/zte/blade/prebuilt/wifi/regcode:system/wifi/regcode \
+    device/zte/blade/prebuilt/wifi/data.patch.hw2_0.bin:system/wifi/data.patch.hw2_0.bin \
+    device/zte/blade/prebuilt/wifi/athwlan.bin.z77:system/wifi/athwlan.bin.z77 \
+    device/zte/blade/prebuilt/wifi/athtcmd_ram.bin:system/wifi/athtcmd_ram.bin \
+    device/zte/blade/prebuilt/wifi/device.bin:system/wifi/device.bin \
+    device/zte/blade/prebuilt/wifi/eeprom.bin:system/wifi/eeprom.bin \
+    device/zte/blade/prebuilt/wifi/eeprom.data:system/wifi/eeprom.data
 
 # Blade uses high-density artwork where available
 PRODUCT_LOCALES += hdpi
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
-
-# This should not be needed but on-screen keyboard uses the wrong density without it.
-PRODUCT_PROPERTY_OVERRIDES += \
-    qemu.sf.lcd_density=240 
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    keyguard.no_require_sim=true \
-    ro.com.android.dateformat=dd-MM-yyyy \
-    ro.ril.hsxpa=2 \
-    ro.ril.gprsclass=10 \
-    ro.build.baseband_version=P729BB01 \
-    ro.telephony.default_network=0 \
-    ro.telephony.call_ring.multiple=false
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.com.google.locationfeatures=1 \
-    ro.setupwizard.enable_bypass=1 \
-    ro.media.dec.jpeg.memcap=20000000 \
-    dalvik.vm.lockprof.threshold=500 \
-    dalvik.vm.dexopt-flags=m=y \
-    dalvik.vm.heapsize=32m \
-    dalvik.vm.execution-mode=int:jit \
-    dalvik.vm.dexopt-data-only=1 \
-    ro.opengles.version=131072  \
-    ro.compcache.default=0
-
