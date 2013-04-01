@@ -79,7 +79,7 @@ BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 TARGET_KERNEL_SOURCE := kernel/zte/msm7x27
 TARGET_KERNEL_CONFIG := cyanogen_blade_defconfig
 BOARD_KERNEL_BASE := 0x02600000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=blade console=null
+BOARD_KERNEL_CMDLINE := androidboot.hardware=blade console=ttyMSM2,115200n8
 
 # # cat /proc/mtd
 # dev:    size   erasesize  name
